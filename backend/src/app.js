@@ -42,6 +42,8 @@ const systemRouter = require('./routes/system.routes');
 const errorRouter = require('./routes/error.routes');
 const literalSortRouter = require('./routes/literal/sort.routes');
 const literalFilterRouter = require('./routes/literal/filter.routes');
+const literalAnalyticsRouter = require('./routes/literal/analytics.routes');
+const literalInfoRouter = require('./routes/literal/info.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
@@ -53,6 +55,8 @@ app.use('/api/system', systemRouter);
 app.use('/api/error', errorRouter);
 app.use('/api/employees/sort', literalSortRouter);
 app.use('/api/employees/filter', literalFilterRouter);
+app.use('/api/employees/analytics', literalAnalyticsRouter);
+app.use('/api/employees', literalInfoRouter); // This will handle /exists/:id, /name/:name etc.
 
 // JWT Aliases (Dataset compatibility)
 app.use('/api/jwt', authRouter); 

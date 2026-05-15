@@ -1,25 +1,23 @@
 const Employee = require('../models/employee.model');
+const APIFeatures = require('../utils/apiFeatures');
 
 class EmployeeService {
-  /**
-   * Create a new employee
-   * @param {Object} employeeData 
-   * @returns {Object} New Employee
-   */
   async createEmployee(employeeData) {
     const employee = await Employee.create(employeeData);
     return employee;
   }
 
-  /**
-   * Get all employees with basic filtering and pagination
-   * @param {Object} query - Express query object
-   * @returns {Array} Employees
-   */
-  async getAllEmployees(query = {}) {
-    // Basic implementation - Search/Filter/Sort will be enhanced in next phase
-    const employees = await Employee.find();
-    return employees;
+  async getAllEmployees(queryStr) {
+    const features = new APIFeatures(Employee.find(), queryStr)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+    const employees = await features.query;
+    const totalCount = await Employee.countDocuments();
+
+    return { employees, totalCount };
   }
 
   /**

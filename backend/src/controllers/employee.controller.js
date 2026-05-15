@@ -1,102 +1,44 @@
 const employeeService = require('../services/employee.service');
+const asyncHandler = require('../utils/asyncHandler');
 
-/**
- * @desc    Create new employee
- * @route   POST /api/employees
- * @access  Private/Admin
- */
-exports.createEmployee = async (req, res) => {
-  try {
-    const employee = await employeeService.createEmployee(req.body);
-    res.status(201).json({
-      status: 'success',
-      data: { employee },
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.createEmployee = asyncHandler(async (req, res) => {
+  const employee = await employeeService.createEmployee(req.body);
+  res.status(201).json({
+    status: 'success',
+    data: { employee },
+  });
+});
 
-/**
- * @desc    Get all employees
- * @route   GET /api/employees
- * @access  Private
- */
-exports.getEmployees = async (req, res) => {
-  try {
-    const employees = await employeeService.getAllEmployees(req.query);
-    res.status(200).json({
-      status: 'success',
-      results: employees.length,
-      data: { employees },
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.getEmployees = asyncHandler(async (req, res) => {
+  const { employees, totalCount } = await employeeService.getAllEmployees(req.query);
+  res.status(200).json({
+    status: 'success',
+    results: employees.length,
+    total: totalCount,
+    data: { employees },
+  });
+});
 
-/**
- * @desc    Get single employee
- * @route   GET /api/employees/:id
- * @access  Private
- */
-exports.getEmployee = async (req, res) => {
-  try {
-    const employee = await employeeService.getEmployeeById(req.params.id);
-    res.status(200).json({
-      status: 'success',
-      data: { employee },
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.getEmployee = asyncHandler(async (req, res) => {
+  const employee = await employeeService.getEmployeeById(req.params.id);
+  res.status(200).json({
+    status: 'success',
+    data: { employee },
+  });
+});
 
-/**
- * @desc    Update employee
- * @route   PATCH /api/employees/:id
- * @access  Private/Admin
- */
-exports.updateEmployee = async (req, res) => {
-  try {
-    const employee = await employeeService.updateEmployee(req.params.id, req.body);
-    res.status(200).json({
-      status: 'success',
-      data: { employee },
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.updateEmployee = asyncHandler(async (req, res) => {
+  const employee = await employeeService.updateEmployee(req.params.id, req.body);
+  res.status(200).json({
+    status: 'success',
+    data: { employee },
+  });
+});
 
-/**
- * @desc    Delete employee
- * @route   DELETE /api/employees/:id
- * @access  Private/Admin
- */
-exports.deleteEmployee = async (req, res) => {
-  try {
-    await employeeService.deleteEmployee(req.params.id);
-    res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.deleteEmployee = asyncHandler(async (req, res) => {
+  await employeeService.deleteEmployee(req.params.id);
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});

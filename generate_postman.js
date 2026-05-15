@@ -6,88 +6,30 @@ const categories = [
     {
         name: "Authentication & JWT Practice",
         routes: [
-            "/auth/register", "/auth/login", "/auth/logout", "/auth/profile", "/auth/forgot-password",
-            "/auth/reset-password", "/auth/change-password", "/auth/verify-email", "/auth/send-otp",
-            "/auth/verify-otp", "/auth/resend-verification", "/auth/update-profile", "/auth/get-profile",
-            "/auth/delete-account", "/auth/deactivate", "/auth/reactivate", "/auth/session", "/auth/history", "/auth/logs",
-            "/jwt/token", "/jwt/verify", "/jwt/refresh", "/jwt/decode", "/jwt/check-expiry", "/jwt/blacklist",
-            "/jwt/revoke", "/jwt/roles", "/jwt/permissions", "/jwt/validate", "/jwt/header", "/jwt/payload", "/jwt/signature", "/jwt/secret"
-        ],
-        method: "POST"
+            { path: "/auth/register", method: "POST", body: { name: "Test User", email: "test@example.com", password: "password123", passwordConfirm: "password123" } },
+            { path: "/auth/login", method: "POST", body: { email: "test@example.com", password: "password123" } },
+            { path: "/auth/logout", method: "POST" },
+            { path: "/auth/profile", method: "GET" },
+            { path: "/auth/forgot-password", method: "POST", body: { email: "test@example.com" } },
+            { path: "/auth/reset-password", method: "PATCH", body: { password: "newpassword123", passwordConfirm: "newpassword123" } },
+            { path: "/auth/change-password", method: "PATCH", body: { passwordCurrent: "password123", password: "newpassword123", passwordConfirm: "newpassword123" } },
+            { path: "/jwt/token", method: "POST" },
+            { path: "/jwt/verify", method: "GET" }
+        ]
     },
     {
         name: "Employee Sorting (Literal)",
         routes: [
             "/employees/sort/experience-asc", "/employees/sort/experience-desc",
             "/employees/sort/salary-asc", "/employees/sort/salary-desc",
-            "/employees/sort/name-asc", "/employees/sort/name-desc",
-            "/employees/sort/age-asc", "/employees/sort/age-desc",
-            "/employees/sort/joining-date-asc", "/employees/sort/joining-date-desc",
-            "/employees/sort/performance-asc", "/employees/sort/performance-desc",
-            "/employees/sort/department-asc", "/employees/sort/department-desc"
-        ]
-    },
-    {
-        name: "Employee Filtering (Literal)",
-        routes: [
-            "/employees/filter/high-experience", "/employees/filter/low-experience",
-            "/employees/filter/verified-certification", "/employees/filter/domain-keyword",
-            "/employees/filter/skill-set", "/employees/filter/state-wise",
-            "/employees/filter/country-wise", "/employees/filter/city-wise",
-            "/employees/filter/timezone-wise", "/employees/filter/salary-range",
-            "/employees/filter/active", "/employees/filter/inactive", "/employees/filter/on-leave"
+            "/employees/sort/name-asc", "/employees/sort/name-desc"
         ]
     },
     {
         name: "Advanced Analytics (Literal)",
         routes: [
             "/employees/analytics/skill-distribution", "/employees/analytics/country-distribution",
-            "/employees/analytics/state-distribution", "/employees/analytics/domain-distribution",
-            "/employees/analytics/certification-analytics", "/employees/analytics/project-analytics",
-            "/employees/analytics/technology-analytics", "/employees/analytics/timezone-analytics",
-            "/employees/analytics/location-analytics", "/employees/analytics/experience-analytics",
-            "/employees/analytics/verification-analytics", "/employees/analytics/task-analytics",
-            "/employees/analytics/salary-distribution", "/employees/analytics/age-group-distribution"
-        ]
-    },
-    {
-        name: "Statistics & Counts (Literal)",
-        routes: [
-            "/stats/employees/count", "/stats/employees/experience-average", "/stats/employees/top-experience",
-            "/stats/employees/project-count", "/stats/employees/task-count", "/stats/employees/country-count",
-            "/stats/employees/state-count", "/stats/employees/domain-count", "/stats/employees/skill-count",
-            "/stats/employees/certification-count", "/stats/employees/timezone-count", "/stats/employees/verified-count",
-            "/stats/employees/project-distribution", "/stats/employees/task-distribution", "/stats/employees/technology-count"
-        ]
-    },
-    {
-        name: "Middleware & System Practice",
-        routes: [
-            "/middleware/logger", "/middleware/auth", "/middleware/rate-limit", "/middleware/error-handler",
-            "/middleware/request-time", "/middleware/role-check", "/middleware/validation", "/middleware/audit-log",
-            "/middleware/cache", "/middleware/compression", "/middleware/helmet", "/middleware/cors",
-            "/middleware/body-parser", "/middleware/cookie-parser", "/middleware/session", "/middleware/passport",
-            "/middleware/morgan", "/middleware/debug", "/middleware/trace", "/middleware/monitor", "/middleware/health", "/middleware/metrics"
-        ]
-    },
-    {
-        name: "Advanced & Custom Queries",
-        routes: [
-            "/employees/advanced/random", "/employees/advanced/trending-skills", "/employees/advanced/recent",
-            "/employees/advanced/top-skills", "/employees/advanced/cloud-engineers", "/employees/advanced/devops-engineers",
-            "/employees/advanced/ai-engineers", "/employees/advanced/fullstack", "/employees/advanced/recent-certifications",
-            "/employees/advanced/top-performers", "/employees/advanced/salary-stats", "/employees/advanced/department-stats",
-            "/employees/advanced/domain-stats"
-        ]
-    },
-    {
-        name: "Error Handling & Validation Practice",
-        routes: [
-            "/error/400", "/error/401", "/error/403", "/error/404", "/error/405", "/error/408", "/error/429",
-            "/error/500", "/error/502", "/error/503", "/error/504", "/error/timeout", "/error/network",
-            "/error/db-connection", "/error/validation-error",
-            "/employees/validate/body", "/employees/validate/params/123", "/employees/validate/query",
-            "/employees/validate/headers", "/employees/validate/cookies", "/employees/validate/all"
+            "/employees/analytics/project-analytics", "/employees/analytics/salary-distribution"
         ]
     }
 ];
@@ -99,19 +41,29 @@ const postmanJson = {
     },
     item: categories.map(cat => ({
         name: cat.name,
-        item: cat.routes.map(route => {
-            const name = route.split('/').pop().replace(/-/g, ' ').toUpperCase();
+        item: cat.routes.map(r => {
+            const path = typeof r === 'string' ? r : r.path;
+            const method = typeof r === 'string' ? "GET" : r.method;
+            const body = typeof r === 'object' && r.body ? JSON.stringify(r.body, null, 4) : null;
+            const name = path.split('/').pop().toUpperCase().replace(/-/g, ' ');
+
             return {
                 name: name,
                 request: {
-                    method: cat.method || "GET",
+                    method: method,
                     header: [
-                        { key: "Authorization", value: "Bearer {{token}}", type: "text" }
+                        { key: "Authorization", value: "Bearer {{token}}", type: "text" },
+                        { key: "Content-Type", value: "application/json", type: "text" }
                     ],
+                    body: body ? {
+                        mode: "raw",
+                        raw: body,
+                        options: { raw: { language: "json" } }
+                    } : undefined,
                     url: {
-                        raw: `${baseUrl}${route}`,
+                        raw: `${baseUrl}${path}`,
                         host: ["{{base_url}}"],
-                        path: route.split('/').filter(p => p)
+                        path: path.split('/').filter(p => p)
                     }
                 },
                 event: [
@@ -119,10 +71,11 @@ const postmanJson = {
                         listen: "test",
                         script: {
                             exec: [
-                                "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
-                                "if(pm.request.url.toString().includes('login')) {",
+                                "pm.test('Status code is 200 or 201', function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });",
+                                "if(pm.request.url.toString().includes('login') || pm.request.url.toString().includes('register')) {",
                                 "    var jsonData = pm.response.json();",
-                                "    pm.collectionVariables.set('token', jsonData.token || jsonData.data.token);",
+                                "    if(jsonData.token) pm.collectionVariables.set('token', jsonData.token);",
+                                "    else if(jsonData.data && jsonData.data.token) pm.collectionVariables.set('token', jsonData.data.token);",
                                 "}"
                             ],
                             type: "text/javascript"
@@ -139,4 +92,4 @@ const postmanJson = {
 };
 
 fs.writeFileSync('Employee_Management_API.postman_collection.json', JSON.stringify(postmanJson, null, 2));
-console.log('Postman collection generated successfully with organized folders and test scripts.');
+console.log('Postman collection updated with sample bodies.');

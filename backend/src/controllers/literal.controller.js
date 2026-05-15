@@ -119,6 +119,19 @@ exports.getByCertification = asyncHandler(async (req, res) => {
   res.status(200).json({ status: 'success', results: employees.length, data: { employees } });
 });
 
+// --- Auth & JWT Handlers ---
+exports.jwtCheck = asyncHandler(async (req, res) => {
+  res.status(200).json({ status: 'success', message: 'JWT verification practice' });
+});
+
+exports.jwtDecode = asyncHandler(async (req, res) => {
+  res.status(200).json({ status: 'success', message: 'JWT decode practice' });
+});
+
+exports.jwtStatus = (type) => asyncHandler(async (req, res) => {
+  res.status(200).json({ status: 'success', type, message: `${type} check practice` });
+});
+
 // --- Placeholder for other literal routes ---
 exports.genericLiteral = (message) => asyncHandler(async (req, res) => {
   res.status(200).json({ status: 'success', message });

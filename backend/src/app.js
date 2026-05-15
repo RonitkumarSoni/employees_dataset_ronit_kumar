@@ -46,6 +46,7 @@ const literalAnalyticsRouter = require('./routes/literal/analytics.routes');
 const literalInfoRouter = require('./routes/literal/info.routes');
 const literalJwtRouter = require('./routes/literal/jwt.routes');
 const literalAuthAliasRouter = require('./routes/literal/auth_aliases.routes');
+const literalMiscRouter = require('./routes/literal/misc.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
@@ -59,6 +60,7 @@ app.use('/api/employees/sort', literalSortRouter);
 app.use('/api/employees/filter', literalFilterRouter);
 app.use('/api/employees/analytics', literalAnalyticsRouter);
 app.use('/api/employees', literalInfoRouter);
+app.use('/api/employees', literalMiscRouter);
 
 // Literal Auth & JWT Aliases
 app.use('/api/jwt', literalJwtRouter);

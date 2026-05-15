@@ -20,6 +20,12 @@ router.get('/ai-engineers', employeeController.getAiEngineers);
 router.get('/fullstack', employeeController.getFullstack);
 router.get('/recent-certifications', employeeController.getRecentCertifications);
 
+// Advanced Practice Aliases (from Dataset)
+const practiceController = require('../controllers/practice.controller');
+router.get('/random', practiceController.getRandomEmployee);
+router.get('/trending-skills', practiceController.getTrendingSkills);
+router.get('/recent', practiceController.getRecentEmployees);
+
 // Lookup by specific fields
 router.get('/name/:name', employeeController.getByName);
 router.get('/state/:state', employeeController.getByState);

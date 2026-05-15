@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const errorHandler = require('./middlewares/error.middleware');
 
 const app = express();
 
@@ -34,10 +35,12 @@ app.use(express.json({ limit: '10kb' }));
 const authRouter = require('./routes/auth.routes');
 const employeeRouter = require('./routes/employee.routes');
 const analyticsRouter = require('./routes/analytics.routes');
+const searchRouter = require('./routes/search.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
 app.use('/api/analytics', analyticsRouter);
+app.use('/api/search', searchRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({

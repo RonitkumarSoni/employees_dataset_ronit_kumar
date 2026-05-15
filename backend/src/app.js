@@ -33,9 +33,11 @@ app.use(express.json({ limit: '10kb' }));
 // --- Routes ---
 const authRouter = require('./routes/auth.routes');
 const employeeRouter = require('./routes/employee.routes');
+const analyticsRouter = require('./routes/analytics.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
+app.use('/api/analytics', analyticsRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({

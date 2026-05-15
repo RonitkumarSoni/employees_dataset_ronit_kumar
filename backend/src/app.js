@@ -40,6 +40,8 @@ const statsRouter = require('./routes/stats.routes');
 const middlewareRouter = require('./routes/middleware.routes');
 const systemRouter = require('./routes/system.routes');
 const errorRouter = require('./routes/error.routes');
+const literalSortRouter = require('./routes/literal/sort.routes');
+const literalFilterRouter = require('./routes/literal/filter.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
@@ -49,6 +51,8 @@ app.use('/api/stats', statsRouter);
 app.use('/api/middleware', middlewareRouter);
 app.use('/api/system', systemRouter);
 app.use('/api/error', errorRouter);
+app.use('/api/employees/sort', literalSortRouter);
+app.use('/api/employees/filter', literalFilterRouter);
 
 // JWT Aliases (Dataset compatibility)
 app.use('/api/jwt', authRouter); 

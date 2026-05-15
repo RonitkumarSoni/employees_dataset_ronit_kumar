@@ -1,6 +1,7 @@
 const express = require('express');
 const employeeController = require('../controllers/employee.controller');
 const { protect, restrictTo } = require('../middlewares/auth.middleware');
+const { employeeValidationRules } = require('../validations/employee.validation');
 
 const router = express.Router();
 
@@ -41,12 +42,12 @@ router.delete('/bulk-delete', restrictTo('admin'), employeeController.bulkDelete
 router
   .route('/')
   .get(employeeController.getEmployees)
-  .post(restrictTo('admin'), employeeController.createEmployee);
+  .post(restrictTo('admin'), employeeValidationRules, employeeController.createEmployee);
 
 router
   .route('/:id')
   .get(employeeController.getEmployee)
-  .put(restrictTo('admin'), employeeController.replaceEmployee)
+  .put(restrictTo('admin'), employeeValidationRules, employeeController.replaceEmployee)
   .patch(restrictTo('admin'), employeeController.updateEmployee)
   .delete(restrictTo('admin'), employeeController.deleteEmployee);
 

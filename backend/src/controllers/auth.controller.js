@@ -1,74 +1,53 @@
 const authService = require('../services/auth.service');
+const asyncHandler = require('../utils/asyncHandler');
 
-/**
- * @desc    Register a new user
- * @route   POST /api/auth/register
- * @access  Public
- */
-exports.register = async (req, res) => {
-  try {
-    const { user, token } = await authService.registerUser(req.body);
+exports.register = asyncHandler(async (req, res) => {
+  const { user, token } = await authService.registerUser(req.body);
+  res.status(201).json({ status: 'success', token, data: { user } });
+});
 
-    res.status(201).json({
-      status: 'success',
-      token,
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  const { user, token } = await authService.loginUser(email, password);
+  res.status(200).json({ status: 'success', token, data: { user } });
+});
 
-/**
- * @desc    Login user
- * @route   POST /api/auth/login
- * @access  Public
- */
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const { user, token } = await authService.loginUser(email, password);
+exports.getProfile = asyncHandler(async (req, res) => {
+  const user = await authService.getUserProfile(req.user.id);
+  res.status(200).json({ status: 'success', data: { user } });
+});
 
-    res.status(200).json({
-      status: 'success',
-      token,
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.updateProfile = asyncHandler(async (req, res) => {
+  const user = await authService.updateProfile(req.user.id, req.body);
+  res.status(200).json({ status: 'success', data: { user } });
+});
 
-/**
- * @desc    Get current logged in user profile
- * @route   GET /api/auth/profile
- * @access  Private
- */
-exports.getProfile = async (req, res) => {
-  try {
-    // req.user is set by auth middleware
-    const user = await authService.getUserProfile(req.user.id);
+exports.changePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const { user, token } = await authService.changePassword(req.user.id, currentPassword, newPassword);
+  res.status(200).json({ status: 'success', token, data: { user } });
+});
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      status: 'error',
-      message: error.message,
-    });
-  }
-};
+exports.forgotPassword = asyncHandler(async (req, res) => {
+  const resetToken = await authService.forgotPassword(req.body.email);
+  res.status(200).json({ status: 'success', message: 'Token sent to email (returning here for test)', resetToken });
+});
+
+exports.resetPassword = asyncHandler(async (req, res) => {
+  const { user, token } = await authService.resetPassword(req.params.token, req.body.password);
+  res.status(200).json({ status: 'success', token, data: { user } });
+});
+
+exports.sendOTP = asyncHandler(async (req, res) => {
+  const otp = await authService.sendOTP(req.body.email);
+  res.status(200).json({ status: 'success', message: 'OTP sent to email', otp });
+});
+
+exports.verifyOTP = asyncHandler(async (req, res) => {
+  const user = await authService.verifyOTP(req.body.email, req.body.otp);
+  res.status(200).json({ status: 'success', message: 'OTP verified successfully', data: { user } });
+});
+
+exports.logout = asyncHandler(async (req, res) => {
+  res.status(200).json({ status: 'success', message: 'Logged out successfully' });
+});

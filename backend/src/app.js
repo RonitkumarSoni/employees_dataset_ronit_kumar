@@ -36,11 +36,15 @@ const authRouter = require('./routes/auth.routes');
 const employeeRouter = require('./routes/employee.routes');
 const analyticsRouter = require('./routes/analytics.routes');
 const searchRouter = require('./routes/search.routes');
+const statsRouter = require('./routes/stats.routes');
+const practiceRouter = require('./routes/practice.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/stats', statsRouter);
+app.use('/api/practice', practiceRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({

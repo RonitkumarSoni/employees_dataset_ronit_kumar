@@ -220,11 +220,11 @@ VITE_API_URL=http://localhost:5000/api
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-- Portfolio: [yourportfolio.com](https://yourportfolio.com)
+**Ronit Soni**
+- GitHub: [@RonitkumarSoni](https://github.com/RonitkumarSoni)
+- LinkedIn: [Ronit Soni](https://www.linkedin.com/in/ronit-sonii/)
+- Portfolio: [ronitkumarsoni.vercel.app](https://ronitkumarsoni.vercel.app/)
 
 ---
 
-⭐️ From [Your Name](https://github.com/yourusername)
+⭐️ From [Ronit Soni](https://github.com/RonitkumarSoni)

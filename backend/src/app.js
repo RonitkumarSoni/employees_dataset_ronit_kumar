@@ -40,13 +40,7 @@ const statsRouter = require('./routes/stats.routes');
 const middlewareRouter = require('./routes/middleware.routes');
 const systemRouter = require('./routes/system.routes');
 const errorRouter = require('./routes/error.routes');
-const literalSortRouter = require('./routes/literal/sort.routes');
-const literalFilterRouter = require('./routes/literal/filter.routes');
-const literalAnalyticsRouter = require('./routes/literal/analytics.routes');
-const literalInfoRouter = require('./routes/literal/info.routes');
-const literalJwtRouter = require('./routes/literal/jwt.routes');
-const literalAuthAliasRouter = require('./routes/literal/auth_aliases.routes');
-const literalMiscRouter = require('./routes/literal/misc.routes');
+const datasetFullRouter = require('./routes/literal/dataset_full.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
@@ -56,15 +50,9 @@ app.use('/api/stats/employees', statsRouter);
 app.use('/api/middleware', middlewareRouter);
 app.use('/api/system', systemRouter);
 app.use('/api/error', errorRouter);
-app.use('/api/employees/sort', literalSortRouter);
-app.use('/api/employees/filter', literalFilterRouter);
-app.use('/api/employees/analytics', literalAnalyticsRouter);
-app.use('/api/employees', literalInfoRouter);
-app.use('/api/employees', literalMiscRouter);
+app.use('/api/employees', datasetFullRouter);
 
-// Literal Auth & JWT Aliases
-app.use('/api/jwt', literalJwtRouter);
-app.use('/api/auth', literalAuthAliasRouter); // This adds aliases to existing /api/auth
+app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'Welcome to the Employee Management Analytics API',

@@ -8,6 +8,8 @@ const errorHandler = require('./middlewares/error.middleware');
 const app = express();
 
 // --- Global Middlewares ---
+const requestLogger = require('./middlewares/logger.middleware');
+app.use(requestLogger);
 
 // Secure HTTP headers with Helmet
 app.use(helmet());
@@ -40,18 +42,27 @@ const statsRouter = require('./routes/stats.routes');
 const middlewareRouter = require('./routes/middleware.routes');
 const systemRouter = require('./routes/system.routes');
 const errorRouter = require('./routes/error.routes');
+const datasetFullRouter = require('./routes/literal/dataset_full.routes');
+const adminRouter = require('./routes/admin.routes');
+const protectedRouter = require('./routes/protected.routes');
+const jwtRouter = require('./routes/jwt.routes');
+const projectsRouter = require('./routes/projects.routes');
+const tasksRouter = require('./routes/tasks.routes');
 
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/search', searchRouter);
-app.use('/api/stats', statsRouter);
+app.use('/api/stats/employees', statsRouter);
 app.use('/api/middleware', middlewareRouter);
 app.use('/api/system', systemRouter);
 app.use('/api/error', errorRouter);
-
-// JWT Aliases (Dataset compatibility)
-app.use('/api/jwt', authRouter); 
+app.use('/api/employees', datasetFullRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/protected', protectedRouter);
+app.use('/api/jwt', jwtRouter);
+app.use('/api/projects', projectsRouter);
+app.use('/api/tasks', tasksRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({

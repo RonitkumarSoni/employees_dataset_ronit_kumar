@@ -95,55 +95,55 @@ class EmployeeService {
 
   // Employee Information Routes
   async getByName(name) {
-    return await Employee.find({ name: { $regex: name, $options: 'i' } });
+    return await Employee.find({ name: { $regex: name, $options: 'i' } }).limit(50);
   }
 
   async getByState(state) {
-    return await Employee.find({ 'profile.contact.address.location.state': { $regex: state, $options: 'i' } });
+    return await Employee.find({ 'profile.contact.address.location.state': { $regex: state, $options: 'i' } }).limit(50);
   }
 
   async getByCountry(country) {
-    return await Employee.find({ 'profile.contact.address.location.country': { $regex: country, $options: 'i' } });
+    return await Employee.find({ 'profile.contact.address.location.country': { $regex: country, $options: 'i' } }).limit(50);
   }
 
   async getByCity(city) {
-    return await Employee.find({ 'profile.contact.address.location.city': { $regex: city, $options: 'i' } });
+    return await Employee.find({ 'profile.contact.address.city': { $regex: city, $options: 'i' } }).limit(50);
   }
 
   async getByTimezone(timezone) {
-    return await Employee.find({ 'profile.contact.address.location.geo.timezone.name': { $regex: timezone, $options: 'i' } });
+    return await Employee.find({ 'profile.contact.address.location.geo.timezone.name': { $regex: timezone, $options: 'i' } }).limit(50);
   }
 
   async getByPrimarySkill(skill) {
-    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.primary': { $regex: skill, $options: 'i' } });
+    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.primary': { $regex: skill, $options: 'i' } }).limit(50);
   }
 
   async getBySecondarySkill(skill) {
-    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.secondary': { $regex: skill, $options: 'i' } });
+    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.secondary': { $regex: skill, $options: 'i' } }).limit(50);
   }
 
   async getByDomain(domain) {
-    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.domains': { $regex: domain, $options: 'i' } });
+    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.domains': { $regex: domain, $options: 'i' } }).limit(50);
   }
 
   async getByExperience(years) {
-    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.years': Number(years) });
+    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.years': Number(years) }).limit(50);
   }
 
   async getByCertification(certification) {
-    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.certifications.current': { $regex: certification, $options: 'i' } });
+    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.certifications.current': { $regex: certification, $options: 'i' } }).limit(50);
   }
 
   async getVerifiedEmployees() {
-    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.certifications.meta.verified': true });
+    return await Employee.find({ 'profile.projects.tasks.assignedTo.skills.experience.certifications.meta.verified': true }).limit(50);
   }
 
   async getAllProjects() {
-    return await Employee.find({}, { 'profile.projects': 1, name: 1, employeeId: 1 });
+    return await Employee.find({}, { 'profile.projects': 1, name: 1, employeeId: 1 }).limit(50);
   }
 
   async getAllTasks() {
-    return await Employee.find({}, { 'profile.projects.tasks': 1, name: 1, employeeId: 1 });
+    return await Employee.find({}, { 'profile.projects.tasks': 1, name: 1, employeeId: 1 }).limit(50);
   }
 
   async getTopExperience() {
@@ -173,7 +173,7 @@ class EmployeeService {
         { 'profile.projects.tasks.assignedTo.skills.secondary': { $regex: keyword, $options: 'i' } },
         { 'profile.projects.tasks.assignedTo.skills.experience.domains': { $regex: keyword, $options: 'i' } },
       ],
-    });
+    }).limit(50);
   }
 
   async getRecentCertifications() {

@@ -22,6 +22,11 @@ exports.updateProfile = asyncHandler(async (req, res) => {
   res.status(200).json({ status: 'success', data: { user } });
 });
 
+exports.deleteProfile = asyncHandler(async (req, res) => {
+  await authService.deleteProfile(req.user.id);
+  res.status(204).json({ status: 'success', data: null });
+});
+
 exports.changePassword = asyncHandler(async (req, res) => {
   const { currentPassword, newPassword } = req.body;
   const { user, token } = await authService.changePassword(req.user.id, currentPassword, newPassword);

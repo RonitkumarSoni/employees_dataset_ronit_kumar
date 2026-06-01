@@ -9,7 +9,7 @@ const crypto = require('crypto');
  */
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE || '30d',
+    expiresIn: process.env.JWT_EXPIRES_IN || '30d',
   });
 };
 
@@ -60,6 +60,16 @@ class AuthService {
       new: true,
       runValidators: true,
     });
+    return user;
+  }
+
+  async deleteProfile(userId) {
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      throw error;
+    }
     return user;
   }
 

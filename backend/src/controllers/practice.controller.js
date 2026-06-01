@@ -2,14 +2,31 @@ const asyncHandler = require('../utils/asyncHandler');
 const Employee = require('../models/employee.model');
 
 /**
+ * Generic Practice Handler Factory
+ * Returns a middleware that sends a success response with a custom message.
+ * Used for practice/demo endpoints required by the dataset.
+ */
+exports.genericPractice = (message) => {
+  return asyncHandler(async (req, res) => {
+    res.status(200).json({
+      status: 'success',
+      message,
+      timestamp: new Date().toISOString(),
+      method: req.method,
+      path: req.originalUrl,
+    });
+  });
+};
+
+/**
  * Middleware Practice Routes
  */
 exports.loggerPractice = asyncHandler(async (req, res) => {
-  res.status(200).json({ status: 'success', message: 'Request logging practice endpoint' });
+  res.status(200).json({ status: 'success', message: 'Request logging practice endpoint', timestamp: new Date().toISOString() });
 });
 
 exports.authPractice = asyncHandler(async (req, res) => {
-  res.status(200).json({ status: 'success', message: 'Authentication practice endpoint' });
+  res.status(200).json({ status: 'success', message: 'Authentication practice endpoint', user: req.user ? req.user.name : 'anonymous' });
 });
 
 exports.rateLimitPractice = asyncHandler(async (req, res) => {
@@ -25,7 +42,7 @@ exports.requestTimePractice = asyncHandler(async (req, res) => {
 });
 
 exports.roleCheckPractice = asyncHandler(async (req, res) => {
-  res.status(200).json({ status: 'success', message: 'Role-based access practice endpoint' });
+  res.status(200).json({ status: 'success', message: 'Role-based access practice endpoint', role: req.user?.role || 'unknown' });
 });
 
 exports.validationPractice = asyncHandler(async (req, res) => {
@@ -33,7 +50,7 @@ exports.validationPractice = asyncHandler(async (req, res) => {
 });
 
 exports.auditLogPractice = asyncHandler(async (req, res) => {
-  res.status(200).json({ status: 'success', message: 'Audit logging practice endpoint' });
+  res.status(200).json({ status: 'success', message: 'Audit logging practice endpoint', action: 'read', user: req.user?.name });
 });
 
 /**
@@ -63,7 +80,7 @@ exports.getRecentEmployees = asyncHandler(async (req, res) => {
 });
 
 exports.getHealth = asyncHandler(async (req, res) => {
-  res.status(200).json({ status: 'success', message: 'API is healthy', version: '1.0.0' });
+  res.status(200).json({ status: 'success', message: 'API is healthy', version: '1.0.0', uptime: process.uptime() });
 });
 
 exports.getConfig = asyncHandler(async (req, res) => {

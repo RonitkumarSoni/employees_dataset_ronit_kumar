@@ -7,6 +7,7 @@ const router = express.Router();
 router.use(protect);
 
 // Search
+router.options('/employees', (req, res) => res.set('Allow', 'GET, OPTIONS').status(200).end());
 router.get('/employees', searchController.searchEmployees);
 
 // Filters

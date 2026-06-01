@@ -11,6 +11,7 @@ router.use(restrictTo('admin'));
 router.get('/stats', analyticsController.getStats);
 
 // Distribution Analytics
+router.head('/employees/top-skills', analyticsController.getSkillDistribution);
 router.get('/employees/skill-distribution', analyticsController.getSkillDistribution);
 router.get('/employees/top-skills', analyticsController.getSkillDistribution);
 router.get('/employees/domain-distribution', analyticsController.getDomainDistribution);

@@ -220,8 +220,6 @@ VITE_API_URL=http://localhost:5000/api
 
 ## 👨‍💻 Author
 
-<img src="screenshots/Profile.png" width="150" height="150" style="border-radius: 50%;" alt="Ronit Soni">
-
 **Ronit Soni**
 - GitHub: [@RonitkumarSoni](https://github.com/RonitkumarSoni)
 - LinkedIn: [Ronit Soni](https://www.linkedin.com/in/ronit-sonii/)

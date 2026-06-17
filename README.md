@@ -22,10 +22,10 @@ Administrators can manage employee records, track performance metrics via an ana
 
 | Resource | Link |
 | :--- | :--- |
-| **🌐 Frontend Live** | [View Live Site](https://employee-analytics-frontend.vercel.app) |
-| **⚙️ Backend Live** | [API Production Server](https://employee-analytics-backend.render.com) |
-| **📚 API Documentation** | [Postman Documentation](https://documenter.getpostman.com/view/example) |
-| **💻 GitHub Repository** | [Source Code](https://github.com/username/employee-management-analytics) |
+| **🌐 Frontend Live** | [View Live Site](https://employees-dataset-ronit-kumar.vercel.app/) |
+| **⚙️ Backend Live** | [API Production Server](https://employee-management-backend-lqcj.onrender.com) |
+| **📚 API Documentation** | [Postman Documentation](https://documenter.getpostman.com/view/50841099/2sBXwtqpMV) |
+| **💻 GitHub Repository** | [Source Code](https://github.com/RonitkumarSoni/employees_dataset_ronit_kumar) |
 
 ---
 
@@ -117,8 +117,8 @@ employee-management-analytics-system/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/username/employee-management-analytics.git
-   cd employee-management-analytics
+   git clone https://github.com/RonitkumarSoni/employees_dataset_ronit_kumar.git
+   cd employees_dataset_ronit_kumar
    ```
 
 2. **Install Backend Dependencies**
@@ -205,7 +205,7 @@ VITE_API_URL=http://localhost:5000/api
 
 | Dashboard Overview | Employee Management | Analytics Insights |
 | :---: | :---: | :---: |
-| ![Dashboard](https://via.placeholder.com/300x200?text=Dashboard) | ![Employee](https://via.placeholder.com/300x200?text=Employee+List) | ![Analytics](https://via.placeholder.com/300x200?text=Analytics+Charts) |
+| ![Dashboard](screenshots/dashboard_overview.png) | ![Employee](screenshots/employee_management.png) | ![Analytics](screenshots/analytics_insights.png) |
 
 ---
 

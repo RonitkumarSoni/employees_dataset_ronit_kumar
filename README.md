@@ -203,9 +203,9 @@ VITE_API_URL=http://localhost:5000/api
 
 > *Add your project screenshots here*
 
-| Dashboard Overview | Employee Management | Analytics Insights |
+| Dashboard Overview | Employee Management | Profile |
 | :---: | :---: | :---: |
-| ![Dashboard](screenshots/dashboard_overview.png) | ![Employee](screenshots/employee_management.png) | ![Analytics](screenshots/analytics_insights.png) |
+| ![Dashboard](screenshots/dashboard_overview.png) | ![Employee](screenshots/employee_management.png) | ![Profile](screenshots/profile.png) |
 
 ---
 
